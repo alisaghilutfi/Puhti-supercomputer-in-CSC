@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2002586
+#SBATCH --account=project_2003161
 #SBATCH --partition=gpu
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
