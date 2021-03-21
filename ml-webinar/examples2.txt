@@ -1,0 +1,72 @@
+# Script for webinar 2
+# TODO beforehand
+
+ssh puhti
+# export SBATCH_PARTITION=gputest
+export SBATCH_RESERVATION=mlwebinar2
+cd ~/ml-webinar/
+git status
+./cleanup
+
+cd examples
+vim run.sh
+# change to 2.2-sng
+# AND srun singularity_wrapper exec
+clear
+
+# After slide 7
+
+ls
+less dogs_vs_cats.py
+# show DATADIR
+
+ls -lh /scratch/dac/data/dogs-vs-cats.tar
+vim run.sh
+# ADD ,nvme:10
+# tar xf /scratch/dac/data/dogs-vs-cats.tar -C $LOCAL_SCRATCH
+# --datadir=$LOCAL_SCRATCH
+
+sbatch run.sh
+squeue -l -u $USER
+tail -f slurm*out
+
+# After slide 12
+
+# Show parts with cpu
+less dogs_vs_cats.py
+
+vim run.sh  # set cpus-per-task=1 and --cpus=1
+
+sbatch run.sh
+squeue -l -u $USER
+
+ssh rXXgYY nvidia-smi
+
+Ctrl-D
+squeue -l -u $USER
+
+gpuseff JOBID
+
+## This part can be skipped
+
+vim run.sh # cpus-per-task=10, --cpus=10 --epochs=100
+sbatch run.sh
+squeue -l -u $USER
+
+ssh rXXgYY nvidia-smi
+
+## After slide 14
+vim run.sh  # --cpus-per-task=40 --gres=gpu:v100:4 --cpus=40
+
+emacs -nw dogs_vs_cats.py
+# mirrored_strategy = tf.distribute.MirroredStrategy()
+# with mirrored_strategy.scope():
+#    model = Sequential(...)
+## C-c >
+
+sbatch run.sh
+squeue -l -u $USER
+
+ssh rXXgYY
+watch nvidia-smi
+
