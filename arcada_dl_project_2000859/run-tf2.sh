@@ -14,5 +14,5 @@ module list
 
 ## export DATADIR=/scratch/project_2000859/extracted
 
-## set -xv
-## srun python3.7 $*
+set -xv
+srun python3.7 $*
