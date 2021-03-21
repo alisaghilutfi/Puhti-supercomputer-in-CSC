@@ -6,7 +6,7 @@
 #SBATCH --gres=gpu:v100:1
 #SBATCH --time=00:15:00
 #SBATCH --mem=64G
-#SBATCH --account=project_2000859
+#SBATCH --account=project_2003161
 
 module purge
 module load tensorflow/2.0.0
